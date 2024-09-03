@@ -10,11 +10,12 @@ defmodule UrlShortenerWeb.UrlsController do
   end
 
   def create(conn, %{"url" => %{ "destination" => destination }}) do
-    case Urls.create_url(%{ "destination" => destination }) do
+    user_id = conn.assigns.current_user.id
+    case Urls.create_url(%{ "destination" => destination, "user_id" => user_id }) do
       {:ok, url} ->
         conn
         |> put_flash(:info, "Url created successfully.")
-        |> redirect(to: ~p"/url/#{url}")
+        |> redirect(to: ~p"/urls/#{url}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, :new, changeset: changeset)
@@ -26,9 +27,19 @@ defmodule UrlShortenerWeb.UrlsController do
     render(conn, :show, url: url)
   end
 
-  def navigate(conn, %{"path" => path}) do
+  def all(conn, _) do
+    urls = Urls.get_url_by_user(conn.assigns.current_user.id)
+    render(conn, :all, urls: urls)
+  end
+
+  def path(conn, %{"path" => path}) do
     url = Urls.get_url_by_path!(path)
     Urls.visit(url.id)
     redirect(conn, external: url.destination)
+  end
+
+  def remove(conn, %{"id" => id}) do
+    Urls.delete_url(Urls.get_url!(id))
+    redirect(conn, to: ~p"/")
   end
 end

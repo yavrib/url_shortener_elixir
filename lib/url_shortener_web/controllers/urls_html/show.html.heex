@@ -1,11 +1,5 @@
 <.header>
-  Url <%= @url.id %>
-  <:subtitle>This is a url record from your database.</:subtitle>
-  <%!-- <:actions>
-    <.link href={~p"/url/#{@url}/edit"}>
-      <.button>Edit url</.button>
-    </.link>
-  </:actions> --%>
+  Url for <%= @url.destination %>
 </.header>
 
 <.list>
@@ -14,4 +8,16 @@
   <:item title="Visited"><%= @url.visited %></:item>
 </.list>
 
-<%!-- <.back navigate={~p"/url"}>Back to url</.back> --%>
+<div class="mt-14 leading-6 flex">
+  <a
+    href={~p"/urls"}
+    type="button"
+    class={[
+      "phx-submit-loading:opacity-75 rounded-lg bg-zinc-900 hover:bg-zinc-700 py-3 px-3",
+      "text-sm font-semibold leading-6 text-white active:text-white/80",
+    ]}
+  >
+    See all urls
+  </a>
+  <%!-- <.button>Remove url</.button> --%>
+</div>

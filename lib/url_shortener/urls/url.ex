@@ -17,8 +17,8 @@ defmodule UrlShortener.Urls.Url do
   @doc false
   def changeset(url, attrs) do
     url
-    |> cast(attrs, [:id, :destination, :path, :visited])
-    |> validate_required([:id, :destination, :path, :visited])
+    |> cast(attrs, [:id, :destination, :path, :visited, :user_id])
+    |> validate_required([:id, :destination, :path, :visited, :user_id])
     |> validate_url(:destination) # <- here
   end
 end

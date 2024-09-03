@@ -1,0 +1,36 @@
+<.header>
+  Urls of <%= @current_user.email %>
+</.header>
+
+<div :for={url <- @urls}>
+  <.list>
+    <:item title="Destination"><%= url.destination %></:item>
+    <:item title="Path"><%= url.path %></:item>
+  </.list>
+  <div class="mt-14 leading-6 flex">
+    <a
+      href={~p"/urls/#{url.id}"}
+      type="button"
+      class={[
+        "phx-submit-loading:opacity-75 rounded-lg bg-zinc-900 hover:bg-zinc-700 py-3 px-3",
+        "text-sm font-semibold leading-6 text-white active:text-white/80"
+      ]}
+    >
+      Details
+    </a>
+  </div>
+</div>
+
+<div class="mt-14 leading-6 flex">
+  <a
+    href={~p"/"}
+    type="button"
+    class={[
+      "phx-submit-loading:opacity-75 rounded-lg bg-zinc-900 hover:bg-zinc-700 py-3 px-3",
+      "text-sm font-semibold leading-6 text-white active:text-white/80"
+    ]}
+  >
+    Create a new url
+  </a>
+  <%!-- <.button>Remove url</.button> --%>
+</div>

@@ -36,8 +36,12 @@ defmodule UrlShortener.Urls do
 
   """
   def get_url!(id), do: Repo.get!(Url, id)
-
   def get_url_by_path!(path), do: Repo.get_by!(Url, path: path)
+  def get_url_by_user(user_id) do
+    Url
+    |> where([u], u.user_id == ^user_id)
+    |> Repo.all
+  end
 
   @doc """
   Creates a url.
